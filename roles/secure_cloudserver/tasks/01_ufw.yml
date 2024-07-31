@@ -1,0 +1,58 @@
+---
+- name: "Install ufw"
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+  become: yes
+
+- name: "Ufw: Reset to setup clean rules"
+  ufw:
+    state: reset
+  become: yes
+
+- name: "Ufw: Set logging"
+  ufw:
+    logging: off
+  become: yes
+
+- name: "Ufw: Deny incoming traffic"
+  ufw:
+    policy: deny
+    direction: incoming
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Allow outgoing traffic"
+  ufw:
+    policy: allow
+    direction: outgoing
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Allow https"
+  ufw:
+    rule: allow
+    port: https
+    proto: tcp
+    direction: in
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Allow wireguard (direct SSH is not allowed)"
+  ufw:
+    rule: allow
+    port: "{{ wireguard_port | int }}"
+    proto: any
+    direction: in
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Disable (required to force reload of before.rules)"
+  ufw:
+    state: disabled
+  become: yes
+
+- name: "Ufw: Enable"
+  ufw:
+    state: enabled
+  become: yes

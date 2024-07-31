@@ -29,19 +29,3 @@
     src: conf/sudoers
     dest: /etc/sudoers.d/sudoers
     mode: u=r,g=r
-
-- name: "Disallow SSH password authentication"
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: "^PasswordAuthentication"
-    line: "PasswordAuthentication no"
-    state: present
-  notify: Restart ssh
-
-- name: "Disallow SSH root access"
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: "^PermitRootLogin"
-    line: "PermitRootLogin no"
-    state: present
-  notify: Restart ssh

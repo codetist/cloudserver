@@ -13,6 +13,8 @@ all:
             hetzner_enable_ipv4: true
             hetzner_enable_ipv6: false
             hetzner_enable_backups: false
+            ## TODO: ip route list default
+            public_network_interface: eth0
   vars:
     host_domain: "{{ global_domain }}"
     ansible_host: "{{ inventory_hostname_short }}.{{ host_domain }}"

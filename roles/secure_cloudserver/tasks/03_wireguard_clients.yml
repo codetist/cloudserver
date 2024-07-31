@@ -1,0 +1,31 @@
+---
+- name: Install qrencode
+  ansible.builtin.apt:
+    name: qrencode
+    state: present
+  become: yes
+
+- name: Create wireguard client configs
+  template:
+    src: conf/wg-client.conf
+    dest: /tmp/wg-client-{{ item.device }}.conf
+  with_items: "{{ wireguard_clients | list }}"
+
+- name: Generate QR codes
+  ansible.builtin.shell: "qrencode -t ansiutf8 < /tmp/wg-client-{{ item.device }}.conf"
+  changed_when: false
+  loop: "{{ wireguard_clients | list }}"
+  register: qrcode
+
+- name: Show QR codes
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  loop: "{{ qrcode.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Delete wireguard client configs
+  ansible.builtin.file:
+    path: /tmp/wg-client-{{ item.device }}.conf
+    state: absent
+  loop: "{{ wireguard_clients | list }}"

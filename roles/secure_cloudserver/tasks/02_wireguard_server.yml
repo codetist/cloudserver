@@ -1,0 +1,35 @@
+---
+- name: "Install wireguard"
+  ansible.builtin.apt:
+    name: wireguard
+    state: present
+  become: yes
+
+- name: "Install ufw"
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+  become: yes
+
+- name: "Enable IPv4 forwarding"
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+  become: yes
+
+- name: "Create server configuration wg0.conf"
+  template:
+    src: conf/wg0-server.conf
+    dest: /etc/wireguard/wg0.conf
+    mode: u=rw,g=r,o=r
+  become: yes
+
+- name: "Make wireguard start at boot"
+  systemd:
+    name: wg-quick@wg0.service
+    state: restarted
+    enabled: yes
+  become: yes

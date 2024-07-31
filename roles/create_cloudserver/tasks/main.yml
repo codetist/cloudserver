@@ -11,5 +11,8 @@
 - name: Init unattended upgrades
   ansible.builtin.include_tasks: 03_unattended_upgrades.yml
 
-- name: Create deploy-user and disable root ssh
+- name: Create deploy-user
   ansible.builtin.include_tasks: 04_create_deploy_user.yml
+
+- name: Disable SSH for root and with password
+  ansible.builtin.include_tasks: 05_disable_root.yml

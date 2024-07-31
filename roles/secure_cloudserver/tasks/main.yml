@@ -1,0 +1,8 @@
+- name: Deploy Ufw
+  ansible.builtin.include_tasks: 01_ufw.yml
+
+- name: Deploy Wireguard server
+  ansible.builtin.include_tasks: 02_wireguard_server.yml
+
+- name: Generate client QR codes
+  ansible.builtin.include_tasks: 03_wireguard_clients.yml

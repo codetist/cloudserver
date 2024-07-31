@@ -1,0 +1,21 @@
+# Wireguard
+wireguard_port: 2020
+wireguard_server_net: "10.10.10"
+wireguard_server_netmask: "24"
+wireguard_server_net_with_mask: "{{ wireguard_server_net }}.0/{{ wireguard_server_netmask}}"
+wireguard_server_address: "{{ wireguard_server_net }}.1/{{ wireguard_server_netmask}}"
+
+wireguard_server_internal_ip: "10.10.10.104/32"
+wireguard_server_internal_dns: "10.10.10.1"
+
+wireguard_server_privkey: "{{ wireguard_server_privkey_vault }}"
+wireguard_server_pubkey: "{{ wireguard_server_pubkey_vault }}"
+
+wireguard_clients: [
+{
+  "publickey" : "{{ wg_client1_pubkey_vault }}",
+  "privatekey" : "{{ wg_client1_privkey_vault }}",
+  "allowedIps" : "{{ wireguard_server_net }}.101",
+  "device": "{{ wg_client1_name }}"
+}
+]
