@@ -1,0 +1,13 @@
+---
+- name: apt update && apt upgrade && apt autoremove
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+    autoremove: true
+
+- name: "Reboot (base images may come with old kernel versions"
+  delegate_to: localhost
+  hetzner.hcloud.server:
+    api_token: "{{ hetzner_cloud_token }}"
+    name: "{{ hostvars[inventory_hostname].vars.hetzner_name }}"
+    state: restarted

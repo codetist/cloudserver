@@ -1,8 +1,7 @@
 ---
-- name: "Create and Init Hetzner CloudServer"
+- name: "Create Hetzner CloudServer, runs only once afterwards root will be prohibited"
   hosts: cloudservers
-  connection: local
-  ignore_unreachable: True
-  gather_facts: False
+  gather_facts: false
+  user: root
   roles:
-    - { role: setup_cloudserver }
+    - { role: create_cloudserver }

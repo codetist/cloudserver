@@ -27,7 +27,9 @@ Virtual Python Environment (might be necessary for `homebrew` users on macOS)
 python3 -m venv ~/.pyansibleenv
 source ~/.pyansibleenv/bin/activate
 python3 -m pip install requests
+python3 -m pip install passlib
 python3 -m pip install python-dateutil
+python3 -m pip install ansible
 ```
 
 #### Configure cloud server(s)

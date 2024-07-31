@@ -1,0 +1,10 @@
+- name: "Enable unattended upgrades (1)"
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: present
+
+- name: "Enable unattended upgrades (2)"
+  template:
+    src: conf/auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    mode: u=rw,g=r,o=r

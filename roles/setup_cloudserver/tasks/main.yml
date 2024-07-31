@@ -1,6 +1,0 @@
----
-- name: Apply tags to tasks within included file when using free-form
-  ansible.builtin.include_tasks: create_cloudserver.yml
-
-- name: Gather facts now, that the DNS records are created and the service is runing
-  setup:
