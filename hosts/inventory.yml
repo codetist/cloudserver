@@ -1,0 +1,18 @@
+all:
+  children:
+    cloudservers:
+      hosts:
+        connect:
+          vars:
+            hetzner_dns_zone: "{{ global_domain }}"
+            hetzner_dns_record: "connect.{{ global_domain }}"
+            hetzner_name: Cloudserver-1
+            hetzner_location: fsn1
+            hetzner_type: cx22
+            hetzner_image: ubuntu-24.04
+            hetzner_enable_ipv4: true
+            hetzner_enable_ipv6: false
+            hetzner_enable_backups: false
+  vars:
+    host_domain: "{{ global_domain }}"
+    ansible_host: "{{ inventory_hostname_short }}.{{ host_domain }}"

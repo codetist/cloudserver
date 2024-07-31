@@ -1,0 +1,8 @@
+---
+- name: "Create and Init Hetzner CloudServer"
+  hosts: cloudservers
+  connection: local
+  ignore_unreachable: True
+  gather_facts: False
+  roles:
+    - { role: setup_cloudserver }

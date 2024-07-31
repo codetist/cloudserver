@@ -1,0 +1,43 @@
+---
+- name: Create SSH key
+  hetzner.hcloud.ssh_key:
+    api_token: "{{ hetzner_cloud_token }}"
+    name: "{{ deploy_user_sshkey_name }}"
+    public_key: "{{ deploy_user_sshkey }}"
+    state: present
+
+- name: Create server using SSH key
+  hetzner.hcloud.server:
+    api_token: "{{ hetzner_cloud_token }}"
+    name: "{{ hostvars[inventory_hostname].vars.hetzner_name }}"
+    server_type: "{{ hostvars[inventory_hostname].vars.hetzner_type }}"
+    image: "{{ hostvars[inventory_hostname].vars.hetzner_image}}"
+    location: "{{ hostvars[inventory_hostname].vars.hetzner_location }}"
+    ssh_keys:
+      - "{{ deploy_user_sshkey_name }}"
+    enable_ipv4: "{{ hostvars[inventory_hostname].vars.hetzner_enable_ipv4 }}"
+    enable_ipv6: "{{ hostvars[inventory_hostname].vars.hetzner_enable_ipv6 }}"
+    backups: "{{ hostvars[inventory_hostname].vars.hetzner_enable_backups }}"
+    image_allow_deprecated: false
+    state: present
+  register: serverdetails
+
+- name: Ensure the server is started
+  hetzner.hcloud.server:
+    api_token: "{{ hetzner_cloud_token }}"
+    name: "{{ hostvars[inventory_hostname].vars.hetzner_name }}"
+    state: started
+
+- name: Print server details
+  debug:
+    msg: "{{ serverdetails }}"
+
+- name: Create DNS IPv4 record
+  community.dns.hetzner_dns_record_set:
+    hetzner_token: "{{ hetzner_dns_token }}"
+    zone: "{{ hostvars[inventory_hostname].vars.hetzner_dns_zone }}"
+    record: "{{ hostvars[inventory_hostname].vars.hetzner_dns_record }}"
+    type: A
+    ttl: 7200
+    value: "{{ serverdetails.hcloud_server.ipv4_address }}"
+    state: present
