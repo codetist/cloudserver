@@ -1,7 +1,0 @@
----
-- name: "Secure CloudServer"
-  hosts: cloudservers
-  gather_facts: true
-  user: "{{ deploy_user }}"
-  roles:
-    - { role: secure_cloudserver }

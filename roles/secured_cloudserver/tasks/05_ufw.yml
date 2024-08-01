@@ -29,7 +29,16 @@
     interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
   become: yes
 
-- name: "Ufw: Allow https"
+- name: "Ufw: Allow incoming ssh (TODO to be removed)"
+  ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+    direction: in
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Allow incoming https"
   ufw:
     rule: allow
     port: https
@@ -38,7 +47,7 @@
     interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
   become: yes
 
-- name: "Ufw: Allow wireguard (direct SSH is not allowed)"
+- name: "Ufw: Allow incoming wireguard (direct SSH is not allowed)"
   ufw:
     rule: allow
     port: "{{ wireguard_port | int }}"

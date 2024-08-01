@@ -2,6 +2,6 @@
 - name: "Create Hetzner CloudServer, runs only once afterwards root will be prohibited"
   hosts: cloudservers
   gather_facts: false
-  user: root
+  user: "{{ deploy_user }}"
   roles:
-    - { role: create_cloudserver }
+    - { role: secured_cloudserver }

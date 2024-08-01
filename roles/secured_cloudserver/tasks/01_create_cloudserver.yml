@@ -7,7 +7,7 @@
     public_key: "{{ deploy_user_sshkey }}"
     state: present
 
-- name: Create server using SSH key
+- name: Create server using SSH key, use cloudinit for deploy user
   delegate_to: localhost
   hetzner.hcloud.server:
     api_token: "{{ hetzner_cloud_token }}"
@@ -21,6 +21,7 @@
     enable_ipv6: "{{ hostvars[inventory_hostname].vars.hetzner_enable_ipv6 }}"
     backups: "{{ hostvars[inventory_hostname].vars.hetzner_enable_backups }}"
     image_allow_deprecated: false
+    user_data: "{{ lookup('ansible.builtin.template', 'conf/cloud-init') }}"
     state: present
   register: serverdetails
 

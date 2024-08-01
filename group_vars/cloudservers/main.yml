@@ -7,7 +7,6 @@ hetzner_dns_token : "{{ hetzner_dns_token_vault }}"
 
 # Deployment User
 deploy_user: "{{ deploy_user_vault }}"
-deploy_user_group: "{{ deploy_user_group_vault }}"
 deploy_user_sshkey: "{{ deploy_user_sshkey_vault }}"
 deploy_user_sshkey_name: "{{ deploy_user_sshkey_name_vault }}"
 deploy_user_password: "{{ deploy_user_password_vault }}"

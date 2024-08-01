@@ -11,8 +11,15 @@
 - name: Init unattended upgrades
   ansible.builtin.include_tasks: 03_unattended_upgrades.yml
 
-- name: Create deploy-user
-  ansible.builtin.include_tasks: 04_create_deploy_user.yml
-
 - name: Disable SSH for root and with password
-  ansible.builtin.include_tasks: 05_disable_root.yml
+  ansible.builtin.include_tasks: 04_disable_root_ssh.yml
+
+- name: Setup ufw
+  ansible.builtin.include_tasks: 05_ufw.yml
+
+- name: Setup wireguard server
+  ansible.builtin.include_tasks: 06_wireguard_server.yml
+
+- name: Print wireguard clients
+  ansible.builtin.include_tasks: 07_wireguard_client.yml
+

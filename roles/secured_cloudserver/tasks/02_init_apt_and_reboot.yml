@@ -4,6 +4,7 @@
     update_cache: yes
     upgrade: yes
     autoremove: true
+  become: yes
 
 - name: "Reboot (base images may come with old kernel versions"
   delegate_to: localhost

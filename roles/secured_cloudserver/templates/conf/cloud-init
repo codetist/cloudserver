@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: {{ deploy_user }}
+    groups: users, admin
+    shell: /bin/bash
+    lock-passwd: false
+    chpasswd: { expire: False }
+    passwd: "{{ deploy_user_password | password_hash('sha512') }}"
+    sudo: ALL=(ALL) ALL
+    ssh_authorized_keys:
+      - {{ deploy_user_sshkey }}

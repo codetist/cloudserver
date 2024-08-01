@@ -6,6 +6,7 @@
     line: "PasswordAuthentication no"
     state: present
   notify: Restart ssh
+  become: yes
 
 - name: "Disallow SSH root access"
   lineinfile:
@@ -14,3 +15,4 @@
     line: "PermitRootLogin no"
     state: present
   notify: Restart ssh
+  become: yes
