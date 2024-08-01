@@ -11,6 +11,19 @@
     dest: /tmp/wg-client-{{ item.device }}.conf
   with_items: "{{ wireguard_clients | list }}"
 
+- name: Cat configs
+  ansible.builtin.shell: "cat /tmp/wg-client-{{ item.device }}.conf"
+  changed_when: false
+  loop: "{{ wireguard_clients | list }}"
+  register: qrcat
+
+- name: Show config
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  loop: "{{ qrcat.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
 - name: Generate QR codes
   ansible.builtin.shell: "qrencode -t ansiutf8 < /tmp/wg-client-{{ item.device }}.conf"
   changed_when: false

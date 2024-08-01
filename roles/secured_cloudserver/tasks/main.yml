@@ -22,4 +22,8 @@
 
 - name: Print wireguard clients
   ansible.builtin.include_tasks: 07_wireguard_client.yml
+  args:
+    apply:
+      tags: wgclients
+  tags: always
 
