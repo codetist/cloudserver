@@ -35,7 +35,6 @@
     port: ssh
     proto: tcp
     direction: in
-    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
   become: yes
 
 - name: "Ufw: Allow incoming https"
