@@ -36,6 +36,7 @@
 - name: Show QR codes
   debug:
     msg: |-
+      {{ item.item.device }}:
       {% for line in item.stdout_lines %}
       {{ line }}
       {% endfor %}
