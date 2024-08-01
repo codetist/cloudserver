@@ -17,22 +17,28 @@
   loop: "{{ wireguard_clients | list }}"
   register: qrcat
 
-- name: Show config
+- name: Show client configs
   debug:
-    msg: "{{ item.stdout_lines }}"
+    msg: |-
+      {% for line in item.stdout_lines %}
+      {{ line }}
+      {% endfor %}
   loop: "{{ qrcat.results }}"
   loop_control:
     label: "{{ item.item }}"
 
 - name: Generate QR codes
-  ansible.builtin.shell: "qrencode -t ansiutf8 < /tmp/wg-client-{{ item.device }}.conf"
+  ansible.builtin.shell: "qrencode -t UTF8 -m2 < /tmp/wg-client-{{ item.device }}.conf"
   changed_when: false
   loop: "{{ wireguard_clients | list }}"
   register: qrcode
 
 - name: Show QR codes
   debug:
-    msg: "{{ item.stdout_lines }}"
+    msg: |-
+      {% for line in item.stdout_lines %}
+      {{ line }}
+      {% endfor %}
   loop: "{{ qrcode.results }}"
   loop_control:
     label: "{{ item.item }}"
