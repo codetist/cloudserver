@@ -39,7 +39,7 @@ python3 -m pip install ansible
 Modify the [inventory](./hosts/inventory.yml) to match your desired cloud server
 product and configuration.
 
-### Playbooks overwiew
+### Playbooks overview
 
 #### 01_init_cloudserver.yml
 
@@ -63,3 +63,28 @@ implements basic security settings:
  ## run playbooks
  ansible-playbook <playbookname>.yml  
 ```
+
+### Hints, tipps and tricks
+
+#### Hetzner web console
+
+In case you locked yourself out of your server, Hetzner provides a web console
+to connect to the servers internally. Use the `deploy_user` and specified password.
+Credentials are created during server creation using a 
+[cloud-init template](./roles/secured_cloudserver/templates/conf/cloud-init).
+Keyboard layout may be English when typing passwords.
+
+#### Wireguard vpn
+
+* The [01_init_cloudserver.yml](./01_init_cloudserver.yml) setups all servers 
+  including Wireguard and disables public SSH access. Make sure to always have at
+  least one Wireguard client configured.
+ 
+* A single Wireguard client config might be shared on multiple devices, as long they
+  are not used at the same time.
+
+* You can use `ansible-playbook 01_init_cloudserver.yml -t wgclients` to print
+  all client configs (plain text config files and QR codes).
+
+* Playbooks will try to connect via VPN first and fallback to public SSH, if VPN
+  connection is not available.
