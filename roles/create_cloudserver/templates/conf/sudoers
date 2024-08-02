@@ -1,2 +1,0 @@
-## Allows people in group deployer to run all commands
-%{{ deploy_user_group }}  ALL=(ALL)       ALL

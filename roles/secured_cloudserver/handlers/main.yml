@@ -1,0 +1,14 @@
+---
+- name: Restart ssh
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: Restart wireguard
+  service:
+    name: wg-quick@wg0.service
+    state: reloaded
+    enabled: yes
+  become: yes

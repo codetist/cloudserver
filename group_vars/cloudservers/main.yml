@@ -1,14 +1,19 @@
 ### Vault variables
 global_domain: "{{ global_domain_vault }}"
 
+# Hetzner Tokens
 hetzner_cloud_token: "{{ hetzner_cloud_token_vault }}"
 hetzner_dns_token : "{{ hetzner_dns_token_vault }}"
 
+# Deployment User
 deploy_user: "{{ deploy_user_vault }}"
-deploy_user_group: "{{ deploy_user_group_vault }}"
 deploy_user_sshkey: "{{ deploy_user_sshkey_vault }}"
 deploy_user_sshkey_name: "{{ deploy_user_sshkey_name_vault }}"
 deploy_user_password: "{{ deploy_user_password_vault }}"
+
+# Wireguard
+wireguard_server_privkey: "{{ wireguard_server_privkey_vault }}"
+wireguard_server_pubkey: "{{ wireguard_server_pubkey_vault }}"
 
 ### Public variables
 ansible_become_pass: "{{ deploy_user_password }}"

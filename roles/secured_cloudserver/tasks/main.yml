@@ -1,0 +1,28 @@
+---
+- name: Pre-deployment checks
+  ansible.builtin.include_tasks: 00_preflight_checks.yml
+
+- name: Create Server on Hetzner Cloud
+  ansible.builtin.include_tasks: 01_create_cloudserver.yml
+
+- name: Upgrade packages and reboot
+  ansible.builtin.include_tasks: 02_init_apt_and_reboot.yml
+
+- name: Init unattended upgrades
+  ansible.builtin.include_tasks: 03_unattended_upgrades.yml
+
+- name: Disable SSH for root and with password
+  ansible.builtin.include_tasks: 04_disable_root_ssh.yml
+
+- name: Setup ufw
+  ansible.builtin.include_tasks: 05_ufw.yml
+
+- name: Setup wireguard server
+  ansible.builtin.include_tasks: 06_wireguard_server.yml
+
+- name: Print wireguard clients
+  ansible.builtin.include_tasks: 07_wireguard_client.yml
+  args:
+    apply:
+      tags: wgclients
+  tags: always
