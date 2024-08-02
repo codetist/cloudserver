@@ -6,7 +6,7 @@ all:
           vars:
             public_dns_name: "{{ inventory_hostname_short }}.{{ global_domain }}"
             hetzner_dns_zone: "{{ global_domain }}"
-            hetzner_dns_record: "{{ public_dns_name }}"
+            hetzner_dns_record: "{{ inventory_hostname_short }}.{{ global_domain }}"
             hetzner_name: Cloudserver-1
             hetzner_location: fsn1
             hetzner_type: cx22
@@ -17,5 +17,6 @@ all:
             ## TODO: ip route list default
             public_network_interface: eth0
   vars:
+    public_dns_name : "{{ hostvars[inventory_hostname].vars.hetzner_dns_record }}"
     host_domain: "{{ global_domain }}"
     ansible_host: "{{ hostvars[inventory_hostname].vars.public_dns_name }}"

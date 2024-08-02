@@ -2,9 +2,6 @@
 - name: Create Server on Hetzner Cloud
   ansible.builtin.include_tasks: 01_create_cloudserver.yml
 
-- name: Gather facts
-  setup:
-
 - name: Upgrade packages and reboot
   ansible.builtin.include_tasks: 02_init_apt_and_reboot.yml
 

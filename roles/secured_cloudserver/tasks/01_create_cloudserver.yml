@@ -42,3 +42,10 @@
     api_token: "{{ hetzner_cloud_token }}"
     name: "{{ hostvars[inventory_hostname].vars.hetzner_name }}"
     state: started
+
+- name: Wait for connection
+  ansible.builtin.wait_for_connection:
+    timeout: 60
+
+- name: Gather facts for newly created server
+  setup:
