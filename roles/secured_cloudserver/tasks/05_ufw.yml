@@ -29,12 +29,13 @@
     interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
   become: yes
 
-- name: "Ufw: Allow incoming ssh (TODO to be removed)"
+- name: "Ufw: Deny incoming ssh via public interface"
   ufw:
-    rule: allow
+    rule: deny
     port: ssh
     proto: tcp
     direction: in
+    interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
   become: yes
 
 - name: "Ufw: Allow incoming https"
@@ -53,6 +54,13 @@
     proto: any
     direction: in
     interface: "{{  hostvars[inventory_hostname].vars.public_network_interface }}"
+  become: yes
+
+- name: "Ufw: Allow  incoming on wireguard interface"
+  ufw:
+    rule: allow
+    direction: in
+    interface: " {{ wireguard_interface }}"
   become: yes
 
 - name: "Ufw: Disable (required to force reload of before.rules)"
