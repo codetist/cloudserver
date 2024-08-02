@@ -47,5 +47,5 @@
   ansible.builtin.wait_for_connection:
     timeout: 60
 
-- name: Gather facts for newly created server
+- name: Gather facts for server
   setup:

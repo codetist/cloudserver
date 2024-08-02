@@ -1,0 +1,33 @@
+---
+- name: Determine SSH connection (VPN or public)
+  block:
+    - name: Try SSH via VPN
+      set_fact:
+        ansible_host: "{{ hostvars[inventory_hostname].vars.vpn_ansible_host }}"
+    - name: Test for VPN SSH connection, this might fail (wait up to 20 seconds)
+      ansible.builtin.wait_for_connection:
+        delay: 0
+        sleep: 0
+        connect_timeout: 10
+        timeout: 20
+      retries: 0
+      delay: 0
+    - name: VPN SSH successful, will be used for running this playbook
+      debug:
+        msg: "VPN is available!"
+  rescue:
+    - name: VPN SSH failed
+      debug:
+        msg: "VPN SSH failed"
+    - name: Fallback to public SSH connection
+      set_fact:
+        ansible_host: "{{ hostvars[inventory_hostname].vars.public_dns_name }}"
+- name: Final test for SSH connection (wait up to 20 seconds)
+  ansible.builtin.wait_for_connection:
+    delay: 0
+    sleep: 0
+    connect_timeout: 10
+    timeout: 20
+  retries: 0
+  delay: 0
+  ignore_unreachable: true
