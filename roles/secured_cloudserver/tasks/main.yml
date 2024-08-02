@@ -1,4 +1,7 @@
 ---
+- name: Pre-deployment checks
+  ansible.builtin.include_tasks: 00_preflight_checks.yml
+
 - name: Create Server on Hetzner Cloud
   ansible.builtin.include_tasks: 01_create_cloudserver.yml
 
@@ -23,4 +26,3 @@
     apply:
       tags: wgclients
   tags: always
-

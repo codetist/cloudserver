@@ -1,0 +1,5 @@
+---
+- name: A single condition can be supplied as string instead of list
+  ansible.builtin.assert:
+    that: "{{ wireguard_clients | length }} > 0"
+    fail_msg: "At least one Wireguard client is required!"
