@@ -16,20 +16,6 @@ all:
             ## TODO: ip route list default
             public_network_interface: eth0
             wireguard_subnet: 1
-        disconnect:
-          vars:
-            hetzner_dns_zone: "{{ global_domain }}"
-            hetzner_dns_record: "{{ inventory_hostname_short }}.{{ global_domain }}"
-            hetzner_name: Cloudserver-2
-            hetzner_location: fsn1
-            hetzner_type: cx22
-            hetzner_image: ubuntu-24.04
-            hetzner_enable_ipv4: true
-            hetzner_enable_ipv6: false
-            hetzner_enable_backups: false
-            ## TODO: ip route list default
-            public_network_interface: eth0
-            wireguard_subnet: 2
   vars:
     public_dns_name : "{{ inventory_hostname_short }}.{{ global_domain }}"
     host_domain: "{{ global_domain }}"
