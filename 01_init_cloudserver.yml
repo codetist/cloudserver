@@ -4,5 +4,5 @@
   gather_facts: false
   user: "{{ deploy_user }}"
   roles:
-    - { role: connection }
+    - { role: connection, tags: [ 'always' ] }
     - { role: secured_cloudserver }

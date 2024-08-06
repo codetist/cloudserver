@@ -1,5 +1,21 @@
 ---
-- name: A single condition can be supplied as string instead of list
+- name: Check at least on Wireguard client exists
   ansible.builtin.assert:
     that: "{{ wireguard_clients | length }} > 0"
     fail_msg: "At least one Wireguard client is required!"
+
+- name: Check each host has its own Wireguard subnet
+  ansible.builtin.assert:
+    that: >
+      hostvars | dict2items | map(attribute="value.vars.wireguard_subnet") | list | count
+      ==
+      hostvars | dict2items | map(attribute="value.vars.wireguard_subnet") | list | unique | count
+    fail_msg: "Each host requires its own Wireguard subnet, wireguard_subnet needs to be unique!"
+
+- name: Check each host has a unique name (as it identifies the server on Hetzner API)
+  ansible.builtin.assert:
+    that: >
+      hostvars | dict2items | map(attribute="value.vars.hetzner_name") | list | count
+      ==
+      hostvars | dict2items | map(attribute="value.vars.hetzner_name") | list | unique | count
+    fail_msg: "Each host requires a unique name, hetzner_name needs to be unique!"

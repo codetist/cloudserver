@@ -1,9 +1,18 @@
 ---
+- name: Set Wireguard config 1
+  ansible.builtin.set_fact:
+    wireguard_server_net: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}"
+
+- name: Set Wireguard config 2
+  ansible.builtin.set_fact:
+    wireguard_server_address: "{{ wireguard_server_net }}.1"
+    wireguard_server_net_mask: "{{ wireguard_server_net }}.0/24"
+
 - name: Determine SSH connection (VPN or public)
   block:
     - name: Try SSH via VPN
       set_fact:
-        ansible_host: "{{ hostvars[inventory_hostname].vars.vpn_ansible_host }}"
+        ansible_host: "{{ wireguard_server_address }}"
     - name: Test for VPN SSH connection, this might fail (wait up to 20 seconds)
       ansible.builtin.wait_for_connection:
         delay: 0
@@ -21,13 +30,13 @@
         msg: "VPN SSH failed"
     - name: Fallback to public SSH connection
       set_fact:
-        ansible_host: "{{ hostvars[inventory_hostname].vars.public_dns_name }}"
-- name: Final test for SSH connection (wait up to 20 seconds)
-  ansible.builtin.wait_for_connection:
-    delay: 0
-    sleep: 0
-    connect_timeout: 10
-    timeout: 20
-  retries: 0
-  delay: 0
-  ignore_unreachable: true
+        ansible_host: "{{ hostvars[inventory_hostname].public_dns_name }}"
+#- name: Final test for SSH connection (wait up to 20 seconds)
+#  ansible.builtin.wait_for_connection:
+#    delay: 0
+#    sleep: 0
+#    connect_timeout: 10
+#    timeout: 20
+#  retries: 0
+#  delay: 0
+#  ignore_unreachable: true
