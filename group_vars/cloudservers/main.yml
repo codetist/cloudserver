@@ -11,9 +11,5 @@ deploy_user_sshkey: "{{ deploy_user_sshkey_vault }}"
 deploy_user_sshkey_name: "{{ deploy_user_sshkey_name_vault }}"
 deploy_user_password: "{{ deploy_user_password_vault }}"
 
-# Wireguard
-wireguard_server_privkey: "{{ wireguard_server_privkey_vault }}"
-wireguard_server_pubkey: "{{ wireguard_server_pubkey_vault }}"
-
 ### Public variables
 ansible_become_pass: "{{ deploy_user_password }}"

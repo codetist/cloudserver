@@ -1,14 +1,14 @@
-# global Wireguard config
-wireguard_port: 2020
+# Wireguard config
 wireguard_interface: wg0
+wireguard_port: 2020
 
-wireguard_server_privkey: "{{ wireguard_server_privkey_vault }}"
-wireguard_server_pubkey: "{{ wireguard_server_pubkey_vault }}"
+wireguard_server_privkey: "{{ wireguard_privkey_vault }}"
+wireguard_server_pubkey: "{{ wireguard_pubkey_vault }}"
 
 wireguard_clients: [
   {
-    "publickey" : "{{ wg_client1_pubkey_vault }}",
+    "device": "{{ wg_client1_name_vault }}",
+    "publickey": "{{ wg_client1_pubkey_vault }}",
     "privatekey" : "{{ wg_client1_privkey_vault }}",
     "allowedIps" : "{{ wireguard_server_net }}.101",
-    "device": "{{ wg_client1_name }}"
   }]
