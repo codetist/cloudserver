@@ -14,10 +14,15 @@ all:
             hetzner_enable_ipv4: true
             hetzner_enable_ipv6: false
             hetzner_enable_backups: false
-            vpn_ansible_host: "10.10.10.1"
+            wireguard_subnet: 1
             ## TODO: ip route list default
             public_network_interface: eth0
   vars:
     public_dns_name : "{{ hostvars[inventory_hostname].vars.hetzner_dns_record }}"
     host_domain: "{{ global_domain }}"
+    # Host-specific Wireguard configuration
+    wireguard_server_net_mask: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}.0/24"
+    wireguard_server_address: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}.1"
+    # Hosts used for Ansible connections
     ansible_host: "{{ hostvars[inventory_hostname].vars.public_dns_name }}"
+    vpn_ansible_host: "{{ wireguard_server_address }}"
