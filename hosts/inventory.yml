@@ -21,8 +21,9 @@ all:
     public_dns_name : "{{ hostvars[inventory_hostname].vars.hetzner_dns_record }}"
     host_domain: "{{ global_domain }}"
     # Host-specific Wireguard configuration
-    wireguard_server_net_mask: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}.0/24"
-    wireguard_server_address: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}.1"
+    wireguard_server_net: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}"
+    wireguard_server_address: "{{ hostvars[inventory_hostname].vars.wireguard_server_net }}.1"
+    wireguard_server_net_mask: "{{ hostvars[inventory_hostname].vars.wireguard_server_net }}.0/24"
     # Hosts used for Ansible connections
     ansible_host: "{{ hostvars[inventory_hostname].vars.public_dns_name }}"
     vpn_ansible_host: "{{ wireguard_server_address }}"

@@ -6,9 +6,9 @@ wireguard_server_privkey: "{{ wireguard_server_privkey_vault }}"
 wireguard_server_pubkey: "{{ wireguard_server_pubkey_vault }}"
 
 wireguard_clients: [
-{
-  "publickey" : "{{ wg_client1_pubkey_vault }}",
-  "privatekey" : "{{ wg_client1_privkey_vault }}",
-  "allowedIps" : "{{ wireguard_server_net }}.101",
-  "device": "{{ wg_client1_name }}"
-}]
+  {
+    "publickey" : "{{ wg_client1_pubkey_vault }}",
+    "privatekey" : "{{ wg_client1_privkey_vault }}",
+    "allowedIps" : "{{ hostvars[inventory_hostname].wireguard_server_net }}.101",
+    "device": "{{ wg_client1_name }}"
+  }]
