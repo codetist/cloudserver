@@ -1,4 +1,13 @@
 ---
+- name: Set Wireguard config 1
+  ansible.builtin.set_fact:
+    wireguard_server_net: "10.10.{{ hostvars[inventory_hostname].vars.wireguard_subnet }}"
+
+- name: Set Wireguard config 2
+  ansible.builtin.set_fact:
+    wireguard_server_address: "{{ wireguard_server_net }}.1"
+    wireguard_server_net_mask: "{{ wireguard_server_net }}.0/24"
+
 - name: Check at least on Wireguard client exists
   ansible.builtin.assert:
     that: "{{ wireguard_clients | length }} > 0"
