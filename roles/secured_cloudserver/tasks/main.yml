@@ -11,14 +11,14 @@
 - name: Init unattended upgrades
   ansible.builtin.include_tasks: 03_unattended_upgrades.yml
 
-- name: Disable SSH for root and with password
-  ansible.builtin.include_tasks: 04_disable_root_ssh.yml
+- name: Setup wireguard server
+  ansible.builtin.include_tasks: 04_wireguard_server.yml
 
 - name: Setup ufw
   ansible.builtin.include_tasks: 05_ufw.yml
 
-- name: Setup wireguard server
-  ansible.builtin.include_tasks: 06_wireguard_server.yml
+- name: Disable SSH for root and with password
+  ansible.builtin.include_tasks: 06_disable_root_ssh.yml
 
 - name: Print wireguard clients
   ansible.builtin.include_tasks: 07_wireguard_client.yml

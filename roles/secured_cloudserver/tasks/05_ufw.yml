@@ -15,7 +15,7 @@
     logging: off
   become: yes
 
-- name: "Ufw: Deny incoming traffic"
+- name: "Ufw: Deny all incoming traffic"
   ufw:
     policy: deny
     direction: incoming
